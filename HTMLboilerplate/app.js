@@ -1,22 +1,12 @@
 const process = require('process');
 const fs = require('fs');
 const path = require('path');
-const html = require('./content');
+const pageContent = require('./content');
 
 const projectFileName = process.argv[2] || 'DemoProject';
 
 const rootFolderName = path.join(__dirname, projectFileName);
 
-// fs.mkdir(rootFolderName, (err) => {
-//     if (err) 
-//         return console.error(err);
-
-//     console.log('Root Directory created successfully!');
-//     let pathToCreate = path.join(__dirname, projectFileName);
-//     createFiles(pathToCreate, 'index', 'html');
-//     createFiles(pathToCreate, 'main.styles', 'css');
-//     createFiles(pathToCreate, 'main.script', 'js');
-// });
 createFolder('root');
 createFolder('js');
 createFolder('css');
@@ -26,6 +16,7 @@ createFiles('main.script', 'js');
 
 function createFolder(folderType){
     let folderName = '';
+    
     if(folderType === 'root'){
         folderName = rootFolderName;
     }else if(folderType === 'js'){
@@ -47,13 +38,15 @@ function createFiles(fileName, fileType){
     let fileContent = '';
     if(fileType === 'html'){
         fileName = rootFolderName+'/'+fileName+'.html';
-        fileContent = html.htmlContent;
+        fileContent = pageContent.htmlContent;
     }
     else if(fileType === 'js'){
         fileName = rootFolderName+'/js/'+fileName+'.js';
+        fileContent = pageContent.jsContent;
     }
     else if(fileType === 'css'){
         fileName = rootFolderName+'/css/'+fileName+'.css';
+        fileContent = pageContent.cssContent;
     }
     else{
         fileName = rootFolderName+'/others/'+fileName+'.txt';        
