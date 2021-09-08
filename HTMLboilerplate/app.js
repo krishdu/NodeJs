@@ -20,11 +20,11 @@ function createFolder(folderType){
     if(folderType === 'root'){
         folderName = rootFolderName;
     }else if(folderType === 'js'){
-        folderName = rootFolderName+'/js';
+        folderName = path.join(rootFolderName,'js');
     }else if(folderType == 'css'){
-        folderName = rootFolderName+'/css';
+        folderName = path.join(rootFolderName, 'css');
     }else{
-        folderName = rootFolderName+'/others';
+        folderName = path.join(rootFolderName+'others');
     }
 
     fs.mkdir(folderName, (err) => {
@@ -37,19 +37,19 @@ function createFolder(folderType){
 function createFiles(fileName, fileType){
     let fileContent = '';
     if(fileType === 'html'){
-        fileName = rootFolderName+'/'+fileName+'.html';
+        fileName = path.join(rootFolderName, fileName+'.html');
         fileContent = pageContent.htmlContent;
     }
     else if(fileType === 'js'){
-        fileName = rootFolderName+'/js/'+fileName+'.js';
+        fileName = path.join(rootFolderName, 'js', fileName+'.js');
         fileContent = pageContent.jsContent;
     }
     else if(fileType === 'css'){
-        fileName = rootFolderName+'/css/'+fileName+'.css';
+        fileName = path.join(rootFolderName, 'css', fileName+'.css');
         fileContent = pageContent.cssContent;
     }
     else{
-        fileName = rootFolderName+'/others/'+fileName+'.txt';        
+        fileName = path.join(rootFolderName, 'others', fileName+'.txt');        
     }
 
     fs.writeFile(fileName, fileContent, (err) =>{
