@@ -26,12 +26,12 @@ function createFolder(folderType){
     }else{
         folderName = path.join(rootFolderName+'others');
     }
-
-    fs.mkdir(folderName, (err) => {
-        if (err) 
-            return console.error(err);
-        console.log(`${folderName} - Directory created successfully!`);
-    });   
+    try {
+        fs.mkdirSync(folderName, true);
+        console.log(`${folderType} - Directory created successfully!`);
+    }catch(err) {
+       console.error(err);
+    }
 }
 
 function createFiles(fileName, fileType){
@@ -51,11 +51,10 @@ function createFiles(fileName, fileType){
     else{
         fileName = path.join(rootFolderName, 'others', fileName+'.txt');        
     }
-
-    fs.writeFile(fileName, fileContent, (err) =>{
-        if (err)
-         return console.log(err);
-
+    try {
+        fs.writeFileSync(fileName, fileContent);
         console.log(`${fileName} - file created successfully!`);
-    });
+    }catch(err) {
+       console.error(err);
+    }
 }
