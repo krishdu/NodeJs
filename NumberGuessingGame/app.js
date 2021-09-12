@@ -4,9 +4,11 @@ const readline = require('readline').createInterface({
 });
 
 const color = require('colors');
+const random = require('random');
 
-const generatedNumber = 51;
-
+//const generatedNumber = 51;
+const generatedNumber = random.int((min = 1), (max = 100));
+//console.log(generatedNumber);
 startGuessing();
 
 async function startGuessing(){
@@ -29,12 +31,10 @@ async function startGuessing(){
 
 function getNumberWithPromise(){
   return new Promise((resolve, reject) =>{
-    readline.question('Guess a number -  '.brightBlue.bold, (answer) => {
+    readline.question('Guess a number between (1 - 100): '.brightBlue.bold, (answer) => {
         if(!isNaN(answer)){
-          //console.log('Resolve');
           resolve(Number(answer));
         }else{
-          //console.log('Reject');
           reject('Not a Number, !Please enter a number!');
         }
     });
