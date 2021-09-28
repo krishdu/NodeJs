@@ -34,3 +34,7 @@ NumberGuessingGame
     + How to use implement npm packages in project
     + What is Package.json
     + What is node_modules
+
+```
+Measure Me
+``` 
