@@ -23,6 +23,12 @@ router.post('/saveuname', (req, res) => {
     res.end();
 });
 
+/*--------- save task -----------*/
+router.post('/saveTask', (req, res) => {
+    let {taskName, taskTime} = req.body;
+    console.log(taskName, taskTime);
+});
+
 
 function getUserName(){
     let userName = localStorage.getItem('userName');
