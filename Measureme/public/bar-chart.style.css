@@ -1,0 +1,21 @@
+
+#app {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 30px 0;
+  width: 100%;
+}
+
+#chart {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  padding: 1rem;
+}
+
+.bar {
+  fill: #4f009e;
+}
+
+.label {
+  fill: #4f009e;
+}

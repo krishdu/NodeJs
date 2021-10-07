@@ -2,11 +2,20 @@ const express = require('express');
 const router = express.Router();
 const localStorage = require('../storage/local-storage');
 
+let userName = getUserName();        
+let masterDetailsIndex = {
+     uname : userName,
+     error : ''
+};
 
 router.get('/', (req, res) => { 
-    let userName = getUserName();
-    res.render('index', {
-        uname : userName
+    userName = getUserName();
+    masterDetailsIndex = {
+        uname : userName,
+        error : ''
+    }; 
+    res.render('index',{ 
+       details : masterDetailsIndex
     });
 });
 
@@ -26,7 +35,30 @@ router.post('/saveuname', (req, res) => {
 /*--------- save task -----------*/
 router.post('/saveTask', (req, res) => {
     let {taskName, taskTime} = req.body;
-    console.log(taskName, taskTime);
+    try{
+        if(taskName && Number(taskTime) > 0 && Number(taskTime) < 24){
+            
+            let previousTsk = [];
+            let getPreviousTask = localStorage.getItem('tasks');
+
+            const newTask = {
+                tName : taskName,
+                tTime : taskTime
+            };
+            previousTsk.push(newTask);
+            getPreviousTask ? previousTsk.push(JSON.parse(getPreviousTask)) : '';
+
+            localStorage.setItem('tasks', JSON.stringify(previousTsk));
+            return res.redirect('/');
+        }
+    }catch(err ) {
+        console.error(err);  
+    }
+
+    masterDetailsIndex.error = "Something went wrong!!";
+    res.render('index', { 
+        details : masterDetailsIndex
+    });
 });
 
 

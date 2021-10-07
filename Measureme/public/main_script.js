@@ -1,4 +1,3 @@
-<script type="text/javascript">
 
     function saveUsername(uname) {
         fetch('/saveuname', {
@@ -44,4 +43,4 @@
         }, 2 * 1000);
     }
 
-</script>
+    

@@ -10,6 +10,7 @@ app.use(logger('tiny'));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended : false}))
 app.use(express.json());
+app.use('/static', express.static('public'))
 
 app.use('/', homeRouter);
 
