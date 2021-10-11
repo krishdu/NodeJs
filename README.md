@@ -50,3 +50,7 @@ Measure Me
 + Phase 3:
     + fetch data from local storage
     + display it with a UI container
+
++ Phase 4: 
+    + delete all task button
+    + display total task hour

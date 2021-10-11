@@ -2,18 +2,25 @@ const express = require('express');
 const router = express.Router();
 const localStorage = require('../storage/local-storage');
 
-let userName = getUserName();        
+let userName = getUserName();  
+let taskDetails = getTaskDetails();
+
 let masterDetailsIndex = {
      uname : userName,
+     taskData : taskDetails,
      error : ''
 };
 
 router.get('/', (req, res) => { 
     userName = getUserName();
+    taskDetails = getTaskDetails();
+
     masterDetailsIndex = {
         uname : userName,
+        taskData : taskDetails,
         error : ''
     }; 
+
     res.render('index',{ 
        details : masterDetailsIndex
     });
@@ -39,16 +46,22 @@ router.post('/saveTask', (req, res) => {
         if(taskName && Number(taskTime) > 0 && Number(taskTime) < 24){
             
             let previousTsk = [];
-            let getPreviousTask = localStorage.getItem('tasks');
+            let getPreviousTask = getTaskDetails();
 
             const newTask = {
                 tName : taskName,
                 tTime : taskTime
             };
-            previousTsk.push(newTask);
-            getPreviousTask ? previousTsk.push(JSON.parse(getPreviousTask)) : '';
+            //previousTsk.push(newTask);
+            if(getPreviousTask){
+                getPreviousTask.push(newTask);
+                previousTsk = getPreviousTask;
+            } else{
+                previousTsk.push(newTask);    
+            }
 
-            localStorage.setItem('tasks', JSON.stringify(previousTsk));
+           setTaskDetails(previousTsk);
+
             return res.redirect('/');
         }
     }catch(err ) {
@@ -61,6 +74,36 @@ router.post('/saveTask', (req, res) => {
     });
 });
 
+/*-Delete all the tasks-*/
+router.get('/deleteallposts', (req, res) => {
+    try{
+         deleteAllTheTasks();
+        return res.redirect('/');
+    }catch(err){
+        masterDetailsIndex.error = err;
+    }
+
+    res.render('index', { 
+        details : masterDetailsIndex
+    });
+});
+
+
+function getTaskDetails(){
+    let oldTask = '';
+    try{
+        oldTask = localStorage.getItem('tasks');
+    }
+    catch(e){
+        console.error(e);
+    }
+
+    return oldTask ? JSON.parse(oldTask) : '';
+}
+
+function setTaskDetails(tasks){
+     localStorage.setItem('tasks', JSON.stringify(tasks));
+}
 
 function getUserName(){
     let userName = localStorage.getItem('userName');
@@ -70,6 +113,14 @@ function getUserName(){
        let defaultName = 'Guest'
        localStorage.setItem('userName', defaultName) ;
        return defaultName;
+    }
+}
+
+function deleteAllTheTasks(){
+    try{
+        localStorage.removeItem('tasks');
+    }catch(e){
+        throw 'Storage error, not able to delete tasks';
     }
 }
 
