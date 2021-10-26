@@ -34,11 +34,3 @@ NumberGuessingGame
     + How to use implement npm packages in project
     + What is Package.json
     + What is node_modules
-
-```
-Measure Me
-``` 
-> I am trying to build a timesheet like application where user have to fill the time allocation for there day to day activity. Each activity have some amount of time allocated. Application will hold the activities and time allocation for every activity. It will display all the activities with seperate container.
-
-| [Live Application (👆)](https://measureme-task.herokuapp.com/) |
-| ------ |  
